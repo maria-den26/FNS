@@ -26,7 +26,7 @@ def save_dataframe_to_excel(df, filename, sheet_name='Sheet1'):
 def upload_df_to_db(df, table_name, schema_name):
     try:
         # conn_string = 'postgresql://postgres:postgres@localhost:5432/fns'
-        conn_string = 'postgresql://postgres:postgres@192.168.0.100:5432/fns'
+        conn_string = 'postgresql://postgres:postgres@192.168.0.100:5432/fns' # Необходимо изменить под конкретную БД
         db = create_engine(conn_string)
         conn = db.connect()
         set_log('Connect to database FNS')
@@ -47,7 +47,7 @@ def main():
     # dd.delete_object('ul_result.xlsx')
 
     # Получение данных ЦБ РФ
-    nrows = 25 #5000   # количество ЮЛ
+    nrows = 2755   # количество ЮЛ
     cb_df = dd.cbrf_to_df(nrows)
 
     # Загружаем в БД данные cb_df
@@ -87,8 +87,8 @@ def main():
     ul_dat = []
     try:
         # В связи с ограничением памяти для хранения pdf выгружаем и обрабатываем файлы партиями
-        nrows = 25  # 551
-        n_batches = 1
+        nrows = 2755
+        n_batches = 5
         batch_size = int(nrows/n_batches)  # кол-во загружаемых и обрабатываемых pdf
         lower_bound = 0
         upper_bound = lower_bound + batch_size
